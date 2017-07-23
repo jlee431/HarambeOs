@@ -1,0 +1,458 @@
+HarambeOS Buglog: Ahmed Hassan(ahassa26), Jin Tak Lee(jlee431), Tyler Traywick(traywic2), Young Jae Ahn(yjahn3)
+
+CHECKPOINT 1: 	HOURS SPENT ON MAINTENENCE: 4 (cleaning up code, commenting, removing redundant material, making sure everything was working, organnizeing everything)
+
+	BUG NUMBER:
+			1)
+				1. DATE FOUND: October 16, 2016.
+				2. DESCRIPTION: Starting the OS would result in a page fault. Paging function was not functioing correctly. We called the paging fuction in kernel.c.
+				3. PERSON WHO FOUND BUG: Everyone
+				4. PERSON WHO SOLVED BUG: Young Jae
+				5. HOW IT WAS SOLVED: solved by setting up the page directory enteries correctly. Some oages were missing the enable bit.
+
+			2)
+				1. DATE FOUND: October 14, 2016.
+				2. DESCRIPTION: The keyboard was typing spaces in between each of the characters.
+				3. PERSON WHO FOUND BUG: Ahmed & Tyler
+				4. PERSON WHO SOLVED BUG: Ahmed & Tyler
+				5. HOW IT WAS SOLVED: We made the handler ignore all of the release scan codes in order to fix it.
+
+			3)
+				1. DATE FOUND: October 15, 2016.
+				2. DESCRIPTION: The RTC handler only generated a few interrupts (or one and would stop).
+				3. PERSON WHO FOUND BUG: Everyone
+				4. PERSON WHO SOLVED BUG: Jin Tak
+				5. HOW IT WAS SOLVED: We wrote the function in C and needed to use iret for the handler to fucntion correctly.
+
+ ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CHECKPOINT 2: HOURS SPENT ON MAINTENENCE: 10 (aside from basic cleaning up, there were a lot of non determinate bugs that needed to be fixed in the keyboard/terminal driver)
+
+	BUG NUMBER:
+		1)
+			1. DATE FOUND: October 21, 2016.
+			2. DESCRIPTION: when creating the RTC write function, we forgot to use break in our switch statement.
+			3. PERSON WHO FOUND BUG: Tyler
+			4. PERSON WHO SOLVED BUG: Tyler
+			5. HOW IT WAS SOLVED: Solved by using a break in the switch statement.
+
+		2)
+			1. DATE FOUND: October 21, 2016.
+			2. DESCRIPTION: In the RTC write function, we did not pass in the number of bytes correctly as a parameter
+			3. PERSON WHO FOUND BUG: Jin Tak
+			4. PERSON WHO SOLVED BUG: Young Jae
+			5. HOW IT WAS SOLVED: Made sure to pass in the correct number of bytes.
+
+		3)
+			1. DATE FOUND: October 22, 2016.
+			2. DESCRIPTION: In our terminal driver, backspace was not working properly. It was because we were not writing to video memory correctly.
+			3. PERSON WHO FOUND BUG: Ahmed
+			4. PERSON WHO SOLVED BUG: Young Jae & Tyler
+			5. HOW IT WAS SOLVED: We made sure screen_x and screen_y were the correct values, so we could write to video memory correctly.
+
+		4)
+			1. DATE FOUND: October 22, 2016.
+			2. DESCRIPTION: The terminal write function was outputting too many spaces.
+			3. PERSON WHO FOUND BUG: Ahmed
+			4. PERSON WHO SOLVED BUG: Tyler
+			5. HOW IT WAS SOLVED: Added an error check statement to fix it.
+
+		5)
+			1. DATE FOUND: October 23, 2016.
+			2. DESCRIPTION: The terminal read function was not reading the correct amount of bytes.
+			3. PERSON WHO FOUND BUG: Ahmed
+			4. PERSON WHO SOLVED BUG: Ahmed
+			5. HOW IT WAS SOLVED: Made sure to pass in the correct number of bytes
+
+		6)
+			1. DATE FOUND: October 21, 2016.
+			2. DESCRIPTION: We forgot to set the cursor to the correct location, because the port values were set incorrectly.
+			3. PERSON WHO FOUND BUG: Young Jae
+			4. PERSON WHO SOLVED BUG: Tyler
+			5. HOW IT WAS SOLVED: Set the port values correctly
+
+		7)
+			1. DATE FOUND: October 22, 2016.
+			2. DESCRIPTION:	The scrolling would happen prematurely.
+			3. PERSON WHO FOUND BUG: Ahmed
+			4. PERSON WHO SOLVED BUG: Ahmed
+			5. HOW IT WAS SOLVED: To fix this, we would check our counter instead of scroll_x.
+
+		8)
+			1. DATE FOUND: October 23, 2016.
+			2. DESCRIPTION: Scrolling wouul happen when backspace is pressed.
+			3. PERSON WHO FOUND BUG: Jin Tak & Tyler
+			4. PERSON WHO SOLVED BUG: Jin Tak & Ahmed & Tyler
+			5. HOW IT WAS SOLVED: We also added a flag to prevent scrolling up again when backspace is used
+
+		9)
+			1. DATE FOUND: October 23, 2016.
+			2. DESCRIPTION:We shifted first instead of adding for the terminal write function.
+			3. PERSON WHO FOUND BUG: Ahmed & Tyler
+			4. PERSON WHO SOLVED BUG: Tyler
+			5. HOW IT WAS SOLVED: Added first instead.
+
+		10)
+			1. DATE FOUND: October 23, 2016.
+			2. DESCRIPTION: Terminal_write does not write values greate than 80 characters correctly.
+			3. PERSON WHO FOUND BUG: Ahmed
+			4. PERSON WHO SOLVED BUG: Ahmed
+			5. HOW IT WAS SOLVED: Used screen_x instead.
+
+		11)
+			1. DATE FOUND: October 23, 2016.
+			2. DESCRIPTION: We did not use screen x when the buffer was full to draw the new line
+			3. PERSON WHO FOUND BUG: Ahmed
+			4. PERSON WHO SOLVED BUG: Young Jae
+			5. HOW IT WAS SOLVED: Used screen_x instead
+
+		12)
+			1. DATE FOUND: October 22, 2016.
+			2. DESCRIPTION: screen does not scroll up properly when buffer if full
+			3. PERSON WHO FOUND BUG: Ahmed
+			4. PERSON WHO SOLVED BUG: Tyler
+			5. HOW IT WAS SOLVED: Used screen_x instead
+
+			13)
+				1. DATE FOUND: October 22, 2016.
+				2. DESCRIPTION: we do not call check screen in terminal write
+				3. PERSON WHO FOUND BUG: Jin Tak
+				4. PERSON WHO SOLVED BUG: Jin Tak
+				5. HOW IT WAS SOLVED: made sure to call the function.
+
+		14)
+			1. DATE FOUND: October 23, 2016.
+			2. DESCRIPTION: scrolling only scrolls up a maximum of one time
+			3. PERSON WHO FOUND BUG: Young Jae
+			4. PERSON WHO SOLVED BUG: Young Jae
+			5. HOW IT WAS SOLVED: Used a flag
+
+		15)
+			1. DATE FOUND: October 22, 2016.
+			2. DESCRIPTION: we need the increment or decrement flag for the screen x as well
+			3. PERSON WHO FOUND BUG: Ahmed
+			4. PERSON WHO SOLVED BUG: Ahmed
+			5. HOW IT WAS SOLVED: Used a flag
+
+		16)
+			1. DATE FOUND: October 23, 2016.
+			2. DESCRIPTION: Had a minus sign instead of an equal sign
+			3. PERSON WHO FOUND BUG: Ahmed
+			4. PERSON WHO SOLVED BUG: Ahmed
+			5. HOW IT WAS SOLVED: changed the signs
+
+		17)
+			1. DATE FOUND: October 23, 2016.
+			2. DESCRIPTION: There is a space at the end after terminal write
+			3. PERSON WHO FOUND BUG: Tyler
+			4. PERSON WHO SOLVED BUG: Tyler
+			5. HOW IT WAS SOLVED: added error checking in the write function
+
+		18)
+			1. DATE FOUND: October 22, 2016.
+			2. DESCRIPTION: We were echoing too many characters.
+			3. PERSON WHO FOUND BUG: Everyone
+			4. PERSON WHO SOLVED BUG: Ahmed
+			5. HOW IT WAS SOLVED: added error checking in keyboard handler
+
+		19)
+			1. DATE FOUND: October 23, 2016.
+			2. DESCRIPTION: Backspace alwasys gets rid of a character extra
+			3. PERSON WHO FOUND BUG: Jin Tak
+			4. PERSON WHO SOLVED BUG: Ahmed & Tyler
+			5. HOW IT WAS SOLVED: added error checking in backspace funcion
+
+		20)
+			1. DATE FOUND: October 22, 2016.
+			2. DESCRIPTION: the very last character persists
+			3. PERSON WHO FOUND BUG: Everyone
+			4. PERSON WHO SOLVED BUG: Ahmed
+			5. HOW IT WAS SOLVED: added error checking in keyboard handler
+
+		21)
+			1. DATE FOUND: October 23, 2016.
+			2. DESCRIPTION: the cursor is messed up in clear function
+			3. PERSON WHO FOUND BUG: Ahmed
+			4. PERSON WHO SOLVED BUG: Ahmed
+			5. HOW IT WAS SOLVED: made sure to update the cursor in the clear function
+
+
+		22)
+			1. DATE FOUND: October 23, 2016.
+			2. DESCRIPTION: incremented before stored values in the buffer
+			3. PERSON WHO FOUND BUG: Young Jae
+			4. PERSON WHO SOLVED BUG: Tyler
+			5. HOW IT WAS SOLVED: added error checking in keyboard handler
+
+
+		23)
+			1. DATE FOUND: October 22, 2016.
+			2. DESCRIPTION: control l is deleting values prematurely
+			3. PERSON WHO FOUND BUG: Everyone
+			4. PERSON WHO SOLVED BUG: Everyone
+			5. HOW IT WAS SOLVED: fixed by fixing keyboard handler
+
+		24)
+			1. DATE FOUND: October 22, 2016.
+			2. DESCRIPTION: Fish had enter characters in between the lines.
+			3. PERSON WHO FOUND BUG: Everyone
+			4. PERSON WHO SOLVED BUG: Ahmed & Tyler
+			5. HOW IT WAS SOLVED: fixed by rewriting terminal write.
+
+		25)
+			1. DATE FOUND: October 21, 2016.
+			2. DESCRIPTION: file system had to be rewritten due to misunderstatnding
+			3. PERSON WHO FOUND BUG: Everyone
+			4. PERSON WHO SOLVED BUG: Everyone
+			5. HOW IT WAS SOLVED: We rewrite file system druver.
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CHECKPOINT 3: HOURS SPENT ON MAINTENENCE: approximately 8 (aside from basic cleaning up, system calls was probably the most challenging mp in terms of code checking and logic flow)
+
+		BUG NUMBER:
+			1)
+				1. DATE FOUND: November 12, 2016.
+				2. DESCRIPTION: Set an equality comparison operator instead of a an assignment operator when setting the file parameter of the fd array to 0.
+				3. PERSON WHO FOUND BUG: Jin Tak
+				4. PERSON WHO SOLVED BUG: Jin Tak
+				5. HOW IT WAS SOLVED: Switched to comparison operator.
+
+			2)
+				1. DATE FOUND: November 13, 2016.
+				2. DESCRIPTION: messed up ecx in the wrapper
+				3. PERSON WHO FOUND BUG: Ahmed
+				4. PERSON WHO SOLVED BUG: Ahmed
+				5. HOW IT WAS SOLVED: Made sure to push the value onto the stack.
+
+			3)
+				1. DATE FOUND: November 14, 2016.
+				2. DESCRIPTION: Read data would always return a non execuatble string.
+				3. PERSON WHO FOUND BUG: Tyler
+				4. PERSON WHO SOLVED BUG: Tyler
+				5. HOW IT WAS SOLVED: This would always cause the function to return -1, so we changed the return value.
+
+			4)
+				1. DATE FOUND: November 12, 2016.
+				2. DESCRIPTION: The shell would start unintentionally a second time when we run testprint for the very first time.
+				3. PERSON WHO FOUND BUG: Young Jae
+				4. PERSON WHO SOLVED BUG: Young Jae
+				5. HOW IT WAS SOLVED: Fixed the logic behind the iret context.
+
+			5)
+				1. DATE FOUND: November 12, 2016.
+				2. DESCRIPTION: Incorrectly recording the parent esp and ebp.
+				3. PERSON WHO FOUND BUG: Everyone
+				4. PERSON WHO SOLVED BUG: Everyone
+				5. HOW IT WAS SOLVED: Fixed the logic behind the iret context.
+
+			6)
+				1. DATE FOUND: November 14, 2016.
+				2. DESCRIPTION: Forgot to make sure the command taken had to have been 32 characters.
+				3. PERSON WHO FOUND BUG: Ahmed
+				4. PERSON WHO SOLVED BUG: Ahmed
+				5. HOW IT WAS SOLVED: added error checking when filling up the array
+
+			7)
+				1. DATE FOUND: November 14, 2016.
+				2. DESCRIPTION: We forgot to append the null character to the name field in the execute function.
+				3. PERSON WHO FOUND BUG: Daniel
+				4. PERSON WHO SOLVED BUG: Ahmed
+				5. HOW IT WAS SOLVED: Appened a null character at the end of the array
+
+			8)
+				1. DATE FOUND: November 14, 2016.
+				2. DESCRIPTION:  Hello would nbot print a newline character at the end
+				3. PERSON WHO FOUND BUG: Ahmed
+				4. PERSON WHO SOLVED BUG: Young Jae
+				5. HOW IT WAS SOLVED: Made the terminal read take in a newline character at the end of the array
+
+			9)
+				1. DATE FOUND: November 14, 2016.
+				2. DESCRIPTION: Exit was not working
+				3. PERSON WHO FOUND BUG: Everyone
+				4. PERSON WHO SOLVED BUG: Everyone
+				5. HOW IT WAS SOLVED: We moved the error checking somewhere else.
+
+			10)
+				1. DATE FOUND: November 14, 2016.
+				2. DESCRIPTION:  Error message did not use scrolling in the terminal.
+				3. PERSON WHO FOUND BUG: Everyone
+				4. PERSON WHO SOLVED BUG: Ahmed
+				5. HOW IT WAS SOLVED: Made sure to use terminal_write to output the error message.
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CHECKPOINT 4: HOURS SPENT ON MAINTENENCE: approximately 12 (a lot of debugging and cleaning up involved to make sure the user programs would function correctly)
+
+			BUG NUMBER:
+				1)
+					1. DATE FOUND: November 26, 2016.
+					2. DESCRIPTION: Variable in FD populate was set to -1 instead of 0.
+					3. PERSON WHO FOUND BUG: Tyler
+					4. PERSON WHO SOLVED BUG: Ahmed & Tyler
+					5. HOW IT WAS SOLVED: Fixed the variable in FD populate
+
+				2)
+					1. DATE FOUND: November 27, 2016.
+					2. DESCRIPTION:2. We forgot to initialize the dentry_t pointer at the start of the direct_read function, so we dereferenced a value of 0.
+					3. PERSON WHO FOUND BUG: Ahmed
+					4. PERSON WHO SOLVED BUG: Ahmed & Tyler
+					5. HOW IT WAS SOLVED: We initialized the variable to a value.
+
+				3)
+					1. DATE FOUND: November 27, 2016.
+					2. DESCRIPTION: We forgot to pass in the address of the local variable in the direct read.
+					3. PERSON WHO FOUND BUG: Everyone
+					4. PERSON WHO SOLVED BUG: Everyone
+					5. HOW IT WAS SOLVED: Passed in the address as a parameter.
+
+				4)
+					1. DATE FOUND: November 28, 2016.
+					2. DESCRIPTION: In the direct read, we were post-incrementing instead of pre-incrementing
+					3. PERSON WHO FOUND BUG: Ahmed
+					4. PERSON WHO SOLVED BUG: Ahmed
+					5. HOW IT WAS SOLVED: Decided to pre-increment instead.
+
+				5)
+					1. DATE FOUND: November 27, 2016.
+					2. DESCRIPTION: 7. We made it system calls line 80 check for less than or equal to, which made the third syserr function fail.
+					3. PERSON WHO FOUND BUG: Ahmed & Tyler
+					4. PERSON WHO SOLVED BUG: Tyler
+					5. HOW IT WAS SOLVED: Used standard error checking
+
+				8)
+					1. DATE FOUND: November 28, 2016.
+					2. DESCRIPTION:  To fix the page fault for the same test, we didnt add if(i != -1), which fails the last case
+					3. PERSON WHO FOUND BUG: Young Jae
+					4. PERSON WHO SOLVED BUG: Young Jae
+					5. HOW IT WAS SOLVED: Added if (i != -1 check)
+
+				9)
+					1. DATE FOUND: November 27, 2016.
+					2. DESCRIPTION: We didnt error check for read dentry by name or FD_Populate which made us fail the forth test case
+					3. PERSON WHO FOUND BUG: Everyone
+					4. PERSON WHO SOLVED BUG: Everyone
+					5. HOW IT WAS SOLVED: Added error checking
+
+				10)
+					1. DATE FOUND: November 28, 2016.
+					2. DESCRIPTION: We forgot to check the flags for the fd array to see if we are supposed to write or read to the files or not
+					3. PERSON WHO FOUND BUG: Everyone
+					4. PERSON WHO SOLVED BUG: Everyone
+					5. HOW IT WAS SOLVED: checked the flag
+
+
+				11)
+					1. DATE FOUND: November 28, 2016.
+					2. DESCRIPTION: We forgot to error check for stdin and std out in general, which made us fail the seventh test case
+					3. PERSON WHO FOUND BUG: Tyler
+					4. PERSON WHO SOLVED BUG: Ahmed
+					5. HOW IT WAS SOLVED: Added error checking
+
+				12)
+					1. DATE FOUND: November 28, 2016.
+					2. DESCRIPTION: The cat function does not clear the buffer in which the command has been, fixed by adding a for loop at the end of the getargs function which clears the get args buffer
+					3. PERSON WHO FOUND BUG: Tyler
+					4. PERSON WHO SOLVED BUG: Ahmed & Tyler & Daniel
+					5. HOW IT WAS SOLVED: added a for loop that clears the buffer
+
+				13)
+					1. DATE FOUND: November 28, 2016.
+					2. DESCRIPTION: There is no need to compare the lengths of the strings with each other (fname vs fname original)
+					3. PERSON WHO FOUND BUG: Jin Tak
+					4. PERSON WHO SOLVED BUG: Young Jae
+					5. HOW IT WAS SOLVED: Fixed grep by checking if the filename is less than 32 characters
+
+				14)
+					1. DATE FOUND: November 26, 2016.
+					2. DESCRIPTION: Syserr was not working in read_dentry_by_name
+					3. PERSON WHO FOUND BUG: Everyone
+					4. PERSON WHO SOLVED BUG: Tyler
+					5. HOW IT WAS SOLVED: checked for empty strings (length == 0) in read dentry by name
+
+				15)
+					1. DATE FOUND: November 27, 2016.
+					2. DESCRIPTION: Fixed a minor bug where the user program would run unexpectedly because the buf variable in the getargs function was not cleared.
+					3. PERSON WHO FOUND BUG: Ahmed & Tyler
+					4. PERSON WHO SOLVED BUG: Ahmed
+					5. HOW IT WAS SOLVED: made sure to initialize the buffer correctly
+
+				16)
+					1. DATE FOUND: November 27, 2016.
+					2. DESCRIPTION: Daniel fixed another minor bug with the original length variable in the read dentry by name function.
+					3. PERSON WHO FOUND BUG: Daniel & Jin Tak
+					4. PERSON WHO SOLVED BUG: Daniel & Jin Tak
+					5. HOW IT WAS SOLVED: We did not assign a value to the variable, so it would run all the terminal user programs even if we did not type in the name of the character fully.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CHECKPOINT 5: HOURS SPENT ON MAINTENENCE: approximately 18 (There was a lot of rewriting involved here in order to make multiple terminals and scheduling work)
+
+			BUG NUMBER:
+				1)
+					1. DATE FOUND: December 2, 2016.
+					2. DESCRIPTION: we were running 8 processes instead of 6, needed to change a magic number
+					3. PERSON WHO FOUND BUG: Everyone
+					4. PERSON WHO SOLVED BUG: Everyone
+					5. HOW IT WAS SOLVED: Changed the magic number
+
+				2)
+					1. DATE FOUND: December 2, 2016.
+					2. DESCRIPTION: when switching terminals, the memcpy method did not work because we tried to pass in a 2-d array.
+					3. PERSON WHO FOUND BUG: Ahmed
+					4. PERSON WHO SOLVED BUG: Ahmed
+					5. HOW IT WAS SOLVED: Fixed it by moving it into a one-d array
+
+				3)
+					1. DATE FOUND: December 4, 2016.
+					2. DESCRIPTION:  screen_x and screen_y was no longer functional with 3 terminals
+					3. PERSON WHO FOUND BUG: Ahmed & Tyler & Young Jae
+					4. PERSON WHO SOLVED BUG: Ahmed & Tyler & Young Jae & Jin Tak
+					5. HOW IT WAS SOLVED: Used an array of terminals instead
+
+				4)
+					1. DATE FOUND: December 3, 2016.
+					2. DESCRIPTION: although we had three separate keyboard buffers, we forgot to create 3 separate line count variables to keep track of how full each was
+					3. PERSON WHO FOUND BUG: Ahmed
+					4. PERSON WHO SOLVED BUG: Ahmed
+					5. HOW IT WAS SOLVED: Decided to change line count into an array
+
+				5)
+					1. DATE FOUND: December 3, 2016.
+					2. DESCRIPTION: The cursor does not blink when we switch to the 3rd or 2nd terminal, but it does for the first one.
+					3. PERSON WHO FOUND BUG: Everyone
+					4. PERSON WHO SOLVED BUG: Everyone
+					5. HOW IT WAS SOLVED: This bug seemed to fix itself
+
+				6)
+					1. DATE FOUND: December 4, 2016.
+					2. DESCRIPTION: After switching terminals, we would type the character in the wrong spots
+					3. PERSON WHO FOUND BUG: Everyone
+					4. PERSON WHO SOLVED BUG: Ahmed & Tyler & Young Jae
+					5. HOW IT WAS SOLVED: Updated the screenX and screenY arrays accordingly
+
+				7)
+					1. DATE FOUND: December 3, 2016.
+					2. DESCRIPTION: We would have a page fault whenever we would switch terminals. It happened because in pit.c we mixed up the esp and ebp variables.
+					3. PERSON WHO FOUND BUG: Everyone
+					4. PERSON WHO SOLVED BUG: Young Jae
+					5. HOW IT WAS SOLVED: made sure we switched stacks correctly
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+OTHER: HOURS SPENT ON MAINTENENCE: approximately 18 (There was a lot of rewriting involved here in order to make multiple terminals and scheduling work)
+
+	not fixed yet:
+		14. testprint works when it is not, like 'testprint Ahmed' will still run testprint
+		16. hello still needs to print out the newline character I think
+		18. not sure if ls should print out the dot or not
+
+		make sure to initializes the shell in boot, or add check in the second and third terminal switches
+
+		22. sigtest page faults and displays unexpected behavior, maybe this is because we did not implement the extra credit, but we need to find out why
+
+in vidmap always animating the physical address
